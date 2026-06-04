@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:EventPingApp.Presentation.ViewModels"
+             x:Class="EventPingApp.Presentation.Views.EventDetailPage"
+             x:DataType="viewModels:EventDetailViewModel"
+             Title="Event Detail">
+    <VerticalStackLayout>
+        <Border StrokeThickness="2" StrokeShape="RoundRectangle 10" Margin="10" Padding="10" VerticalOptions="Fill" HorizontalOptions="Fill">
+            <VerticalStackLayout>
+                <Label Text="Name" Margin="0,0,0,8" Style="{StaticResource labelCustomStyle}" />
+                <Entry WidthRequest="250" Margin="0,0,0,8" Style="{StaticResource EntryCustomStyle}" Text="{Binding Name.Value}" />
+                <Label Text="{Binding Name.Errors, Converter={StaticResource ValidationErrorsConverter}}" Margin="0,0,0,8" Style="{StaticResource LabelValidationErrorStyle}" />
+                <Label Text="Description" Margin="0,40,0,8" Style="{StaticResource labelCustomStyle}" />
+                <Entry WidthRequest="250" Margin="0,0,0,8" Style="{StaticResource EntryCustomStyle}" Text="{Binding Description.Value}" />
+                <Label Text="{Binding Description.Errors, Converter={StaticResource ValidationErrorsConverter}}" Margin="0,0,0,8" Style="{StaticResource LabelValidationErrorStyle}" />
+                <Label Text="Date"  Margin="0,40,0,8" Style="{StaticResource labelCustomStyle}" />
+                <DatePicker HorizontalOptions="Start" WidthRequest="250" Margin="0,0,0,10" Date="{Binding Date}" />
+                <Label Text="Time"  Margin="0,40,0,8" Style="{StaticResource labelCustomStyle}" />
+                <TimePicker HorizontalOptions="Start" WidthRequest="250" Margin="0,0,0,10" Time="{Binding Time}" Format="HH:mm"/>
+            </VerticalStackLayout>
+        </Border>
+        <Button Text="{Binding SaveButtonText}" HeightRequest="35" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="10,0,10,0" Command="{Binding SaveEventCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

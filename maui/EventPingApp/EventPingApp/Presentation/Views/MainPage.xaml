@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
+             xmlns:viewModels="clr-namespace:EventPingApp.Presentation.ViewModels"
+             xmlns:models="clr-namespace:EventPingApp.Presentation.Models"
+             x:Name="RootPage"
+             x:Class="EventPingApp.Presentation.Views.MainPage"
+             x:DataType="viewModels:MainViewModel"
+             Title="Home">
+    <Grid RowDefinitions="*, Auto">
+        <cal:Calendar Grid.Row="0" x:Name="CalendarControl" Margin="5" SelectedDate="{Binding SelectedDate}" Events="{Binding CalendarEvents}" EventsScrollViewVisible="True" SelectedDayBackgroundColor="Blue">
+            <cal:Calendar.EventTemplate>
+                <DataTemplate x:DataType="viewModels:EventItemViewModel">
+                    <VerticalStackLayout Spacing="8">
+                        <Border StrokeThickness="1" Shadow="{StaticResource CardShadow}" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Black}}" Padding="10" Margin="5,5,12,12" StrokeShape="RoundRectangle 15">
+                            <Grid RowDefinitions="1*, 1*, 1*" ColumnDefinitions="1*, 1*, 1*" ColumnSpacing="10" RowSpacing="4">
+                                <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" Text="{Binding TimeFormatted}" FontSize="18" FontAttributes="Bold" Opacity="0.9" />
+                                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Name}" FontSize="18" FontAttributes="Bold" Opacity="0.9" />
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Description}" FontSize="14" FontAttributes="None" Opacity="0.9" MaxLines="1" LineBreakMode="TailTruncation" />
+                                <HorizontalStackLayout Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" Spacing="6" HorizontalOptions="End">
+                                    <Button Text="✏️" WidthRequest="35" HeightRequest="35" CornerRadius="8" Command="{Binding EditEventCommand}" />
+                                    <Button Text="🗑" WidthRequest="35" HeightRequest="35" CornerRadius="8" Command="{Binding DeleteEventCommand}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </cal:Calendar.EventTemplate>
+        </cal:Calendar>
+        <Button Grid.Row="1" ImageSource="plus.png" Text="Add new event" HeightRequest="35" VerticalOptions="Fill" HorizontalOptions="Fill" Margin="10,35,10,15" Command="{Binding AddEventCommand}" />
+    </Grid>
+</ContentPage>
