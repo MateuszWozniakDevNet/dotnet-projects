@@ -4,24 +4,37 @@ namespace AmazingWorldCup26PredictionApp
 {
     public static class MauiProgram
     {
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
-            builder
+        public static MauiApp CreateMauiApp() =>
+            MauiApp.CreateBuilder()
                 .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                });
+                .RegisterFonts()
+                .AddMauiBlazorWebView()
+                .AddDebug()
+                .Build();
 
+        public static MauiAppBuilder RegisterFonts(this MauiAppBuilder builder)
+        {
+            builder.ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+            });
+            return builder;
+        }
+
+        public static MauiAppBuilder AddDebug(this MauiAppBuilder builder)
+        {
+            #if DEBUG
+                builder.Services.AddBlazorWebViewDeveloperTools();
+                builder.Logging.AddDebug();
+            #endif
+                return builder;
+        }
+
+        public static MauiAppBuilder AddMauiBlazorWebView(this MauiAppBuilder builder)
+        {
             builder.Services.AddMauiBlazorWebView();
-
-#if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
-    		builder.Logging.AddDebug();
-#endif
-
-            return builder.Build();
+            return builder;
         }
     }
 }
